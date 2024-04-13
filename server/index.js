@@ -1,9 +1,24 @@
 import express from 'express';
 import { createServer } from 'http';
+import { Server } from 'socket.io';
 
 const app = express();
 
 const server = createServer(app);
+
+const io = new Server(server,{
+    cors : "*"
+});
+
+io.on("connection",(socket) => {
+    console.log(`User connected with id : ${socket.id}`);
+    io.to(socket.id).emit("getId",{ id: socket.id });
+
+    socket.on("connected",({ name }) => {
+        socket.broadcast.emit("connected",{ name });
+    })
+
+})
 
 const PORT = process.env.PORT || 8001;
 server.listen(PORT,() => {
