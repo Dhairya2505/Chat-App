@@ -4,6 +4,7 @@ import { io } from 'socket.io-client';
 export default function Chat({name}){
     const [Id,setId] = useState(null);    
     const [message,setMessage] = useState('');
+    const [joinedName,setJoinedName] = useState('');
 
     const socket = useMemo(() => {
             return io("localhost:8001");
@@ -19,12 +20,25 @@ export default function Chat({name}){
 
         socket.on("connected",({ name }) => {
             console.log(`${name} connected`);
+            setJoinedName(name);
         })
 
     },[]);
+
+    useEffect(() => {
+
+        const intervalId = setInterval(() => {
+            setJoinedName('');
+        }, 1300);
+
+        return () => clearInterval(intervalId); 
+    },[joinedName])
     
     return (
         <div className="h-full">
+            <div className={`fixed ${joinedName != '' ? `right-10 top-10 bg-blue-500 p-2 rounded-xl border border-black transition-all duration-200` : `-right-28 top-10 bg-blue-500 p-2 rounded-xl border border-black transition-all duration-200`}`}>
+                {joinedName} Connected
+            </div>
             <div className="flex text-3xl justify-center p-7 font-serif">
                 {name}
             </div>
