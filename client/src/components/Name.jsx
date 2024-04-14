@@ -17,7 +17,7 @@ export default function Name(){
                 !Form &&
                 <form className="h-svh w-screen flex flex-col justify-center items-center" onSubmit={submitHandler}>
                     <label htmlFor="Name" className="p-2 text-3xl font-bold font-serif">Name</label>
-                    <input type="text" id="Name" value={name} onChange={ e => setName(e.target.value) } className="outline-none border border-gray-400 rounded-md p-2 w-80 "/>
+                    <input type="text" id="Name" value={name} onChange={ e => setName(e.target.value) } className="outline-none border border-gray-400 rounded-md p-2 w-3/4 sm:w-80"/>
                     <button type="submit" className="bg-blue-400 p-2 border border-blue-900 rounded-lg m-5 w-24 active:bg-blue-500">Enter</button>
                 </form>
             }

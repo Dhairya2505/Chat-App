@@ -15,7 +15,11 @@ io.on("connection",(socket) => {
     io.to(socket.id).emit("getId",{ id: socket.id });
 
     socket.on("connected",({ name }) => {
-        socket.broadcast.emit("connected",{ name });
+        socket.broadcast.emit("connecting",{ name });
+    })
+
+    socket.on("message",({ name, message, Id }) => {
+        io.emit("receive-message",{ name, message, Id });
     })
 
 })
